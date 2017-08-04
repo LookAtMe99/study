@@ -1,0 +1,11 @@
+Docker의 issue 중 대부분은 container와 storage driver 관련 문제입니다. 변경한 설정 내용이 기존의 설정 내용과 충돌하여 연결이 끊어지거나 비정상적으로 정보가 생성되어 문제가 됩니다.
+
+1. 이런 문제를 해결하기 위해서는 항상 데이터로 사용되는 부분은 volumes 설정으로 host에 share 해야 합니다. 그래야 docker container에서 문제가 생겨도 container를 재 생성하여 문제를 해결할 수 있습니다.
+2. 1과 같은 설정이 되어 있다면 docker에 문제가 생겨도 걱정하지 않아도 됩니다. 
+	1.	서비스를 중지하고
+	2.	docker directory의 전체 파일을 삭제 후
+	3.	다시 서비스를 시작하고
+	4.	container 생성을 위한 docker image pull 부터 다시 진행하고
+	5.	container를 생성합니다
+	6.	container 생성 시 host의 데이터에 의해 동작하므로 데이터 손실이 발생하지 않습니다.
+3. 조금이라도 linux system의 명령을 사용할 줄 안다면 docker 명령 실행 시 발생하는 에러와 연관된 container들만 삭제하고 재 생성하면 됩니다.

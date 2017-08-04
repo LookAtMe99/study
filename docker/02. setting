@@ -1,0 +1,26 @@
+Storage Drive를 설정하는 방법은 2가지가 있습니다. 하나는 docker를 설치하고 실행하기 전 storage-driver에 대한 정보를 정의하는 방법이고 또 하나는 docker service 실행 시 옵션으로 정의하는 방법입니다. 후자의 경우 이미 생성되어 있는 Container가 있을 경우 문제가 될 수 있습니다. 그럴 경우 Container를 삭제 후 재 생성해야 합니다. 후자의 내용 또한 docker를 설치하고 실행하기 전 설정하는 것이 바람직합니다.
+
+storage driver setting 
+# Edit /etc/docker/daemon.json. If it does not yet exist, create it. Assuming that the file was empty, add the following contents.
+{
+  "storage-driver": "devicemapper"
+}
+
+storage driver setting 
+# Edit /usr/lib/systemd/system/docker.service 
+[Service]
+ExecStart=/usr/bin/dockerd --storage-driver <Storage Driver>  # 설정 부분
+
+$ sudo systemctl daemon-reload
+$ sudo systemctl restart docker
+
+Docker home directory 또한 docker.service 파일을 수정하여 적용할 수 있습니다. 대신 수정 전에 이미 생성되어 있는 docker home directory의 파일들을 변경하고자 하는 위치로 복사하고 진행해야 합니다 (그래야만 데이터가 보존됩니다) 만약 기존에 생성한 데이터가 불필요하다면 바로 실행해도 무방합니다.
+storage driver를 설정할 때 처럼 이미 생성되어 있는 Container의 경우 문제가 될 수 있습니다
+
+home directory setting 
+# Edit /usr/lib/systemd/system/docker.service 
+[Service]
+ExecStart=/usr/bin/dockerd -g <Directory Path>  # 설정 부분
+
+$ sudo systemctl daemon-reload
+$ sudo systemctl restart docker

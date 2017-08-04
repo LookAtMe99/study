@@ -1,0 +1,33 @@
+Install Docker CE 
+# Install required packages. yum-utils provides the yum-config-manager utility, and device-mapper-persistent-data and lvm2 are required by the devicemapper storage driver.
+$ sudo yum install -y yum-utils device-mapper-persistent-data lvm2
+
+
+# Enable the extras CentOS repository. This ensures access to the container-selinux package which is required by docker-ce.
+$ sudo yum-config-manager --enable extras
+
+
+# Use the following command to set up the stable repository. You always need the stable repository, even if you want to install edge builds as well.
+$ sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+# Optional: Enable the edge repository. This repository is included in the docker.repo file above but is disabled by default. You can enable it alongside the stable repository.
+$ sudo yum-config-manager --enable docker-ce-edge
+
+
+# Update the yum package index.
+$ sudo yum makecache fast
+
+
+# Install the latest version of Docker, or go to the next step to install a specific version.
+$ sudo yum install docker-ce
+
+
+# Install a specific version
+$ sudo yum install docker-ce-<VERSION> 
+
+
+# Start Docker.
+$ sudo systemctl start docker
+Reference : https://docs.docker.com/engine/installation/linux/centos/#install-using-the-repository (Docker Homepage)

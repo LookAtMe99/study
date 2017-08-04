@@ -1,0 +1,40 @@
+# docker login/logout : official docker image의 경우 login 동작을 하지 않아도 접근 가능하지만 private docker image는 접근이 허가된 user로 로그인 해야 합니다
+$ docker login/logout  # dockerhub site를 사용할 경우 따로 url 정보 기입 없이 docker login/logout 명령으로 login/logout이 가능합니다
+$ docker login <Docker Registry URL>  # 레지스트리 서버를 사용할 경우 해당 URL 정보를 함께 입력해야 합니다
+ 
+ 
+# docker image build : Dockerfile을 기반으로 build 명령을 수행합니다. files에는 Dockerfile 및 Dockerfile에서 정의되어 있는 file들이 포함되어 있어야 합니다.
+# "." 이 해당 폴더의 All files의 의미로 사용됩니다
+# 옵션이 정말 많은데 실제 빌드를 하면서 테스트를 할 경우 다른 옵션들을 사용할 일은 거의 없습니다. (docker homepage에 내용이 자세하게 명시되어 있습니다)
+$ docker build -t <image>:<tag> <files>
+$ docker images  # 정의된 내용으로 docker image가 생성되었는지 확인합니다.
+ 
+ 
+# docker image push : local에서 생성한 docker image를 push 합니다. 현재 remote 저장소인 dockerhub에서 automated build 기능을 통해 docker image build 및 push를 수행하고 있습니다.
+$ docker push <url>/<image>:<tag>
+ 
+ 
+# docker image pull : remote 저장소에서 docker image를 다운받아서 local에 저장합니다.
+# official image의 경우 <url>을 기입할 필요가 없고 <tag>를 기입하지 않으면 latest로 인지됩니다
+$ docker pull <url>/<image>:<tag>
+ 
+ 
+# docker run : docker image를 실행시킵니다. docker에서는 container를 생성하는 명령입니다.
+# 해당 기능은 아무 설정을 하지 않고 이미지를 구동시키는 경우 사용하기 좋습니다.
+# 설정 내용이 많고 복잡해지면 사용하기 힘들기 때문에 해당 기능을 사용하기 보다는 docker-compose의 yml에 설정 내용을 정의하여 이미지를 구동합니다 (container를 생성합니다)
+$ docker run -d -it --name <container name> <image>:<tag> bin/bash
+ 
+ 
+# docker exec : docker container 내부에서 명령을 실행하거나 container의 내부 세션으로 접근할 수 있습니다.
+$ docker exec <container_name> <command>  # docker container에서 command를 실행합니다
+$ docker exec -it <container_name> bash
+ 
+ 
+# docker cp : docker container 와 host 간 file을 복사하는 명령입니다.
+# centos7에서는 kernel에 따라서 docker의 storage driver overlay에 복사할 경우 user:group 정보가 number로 정의되는 경우가 있어서 cp 후 exec로 권한을 재설정해야 할 수 있습니다
+$ docker cp <container_name>:<container_path> <target(host_path)>  # docker container 내부의 파일을 host로 복사하는 명령입니다
+$ docker cp <host_path> <container_name>:<targer(container_path)>  # host의 파일을 docker container 내부로 복사하는 명령입니다
+ 
+ 
+# docker start/stop/restart : docker container를 start/stop/restart 하는 명령입니다.
+# docker ps : docker container list를 조회하는 명령입니다.
