@@ -38,10 +38,10 @@ function Update-AllAssemblyInfoFiles ( $version )
   }
 }
 
-$project = $args[0] #args에는 jenkins project name을 사용
-$dir = "D:\Jenkins\jobs\$project\"
-$versionFile = "D:\Jenkins\jobs\$project\version.txt"								
-$buildinfo="nextBuildNumber"
+$project = $args[0] 									#args에는 jenkins project name을 사용
+$dir = "D:\Jenkins\jobs\$project\"						# jenkins path
+$versionFile = "D:\Jenkins\version.txt"					# version file path								
+$buildinfo="5"											# sample
 $state_file = get-content -path $dir$buildinfo
 $next_version = $state_file
 [int]$build_version = $next_version
