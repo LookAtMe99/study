@@ -1,0 +1,36 @@
+관련 내용은 순수 제 경험에 대한 내용이며 답이 아닙니다
+
+Permission
+	권한 설정 시 유의해야 할 점은 가급적 jira-users, Any logged in user 등 을 접근 권한에서 배제해야 한다는 점입니다
+	jira-users 는 jira default user로 jira에 log-in을 하기 위해서는 해당 그룹에 속하게 됩니다. 그렇기 때문에 모든 user가 공통으로 사용하거나 접근해야 하는 Project를 제외하고는 접근이 되지 않도록 설정합니다 
+	가급적 특정 user 및 group을 배제하고 Project Role의 Administrators, Developers, Users 등으로 설정합니다
+	다른 User의 내용을 Control 하거나 Delete, Move, Manage 하는 권한의 내용은 Administrators 로 설정하고 그 외의 것은 각각 임무에 따라서 Users, Developers 로 구분하는 것을 추천합니다 (정답은 아닙니다)
+	
+	
+Project
+- Key
+	Key는 절대적으로 유니크 해야 합니다. 만약 하나의 회사에서 여러 개의 JIRA를 활용한다면 사내 Jira Project Key Rule을 정의해서 활용해야 합니다. 단일 서버 구성에서는 중복 체크가 되서 동일 Key를 생성할 수 없지만 각각의 JIRA 에 대한 중복은 자체적으로 체크가 되지 않습니다
+	중복된 Key가 사용될 경우 Developement tools 에 노출되는 commit 정보가 부정확하게 될 수 있습니다
+	위에서도 언급하였지만 가능하다면 Key를 생성하는 정책 및 Project Key List를 관리하는 것이 좋습니다
+
+- Users and roles
+	Permission의 내용과 겹치는 정보입니다
+	가급적 Developers & Users 에는 jira-users (Default group) 을 포함하지 않습니다. Permission에서 언급한 내용이라 따로 설명은 추가하지 않습니다
+
+
+Screen
+	Create, Edit/View Screen에는 Resolution을 포함하지 않습니다 (Create에는 절대 X)
+	Resolution은 Jira가 정의한 필수 requirement field 이기 때문에 무조건적인 입력을 받게 됩니다. Workflow가 여러 단계로 나눠져 있지 않고 To Do - Close 로 심플하다면 Edit/View Screen에 포함해도 됩니다. 
+	Resolution을 To Do or Unresolved 등의 이름으로 정의하여 아직 처리되지 않은 상태로 인식하고 일을 처리할 수는 있지만 JIRA Project 진입 시 기본적으로 노출하는 Open Issue에서는 Resolution에 value가 입력되면 Resolved 되었다고 판단하여 해당 이슈가 포함되지 않게 됩니다 (JIRA gadget 에서 unresolved issue를 기반으로 제공되는 내용 또한 동일하게 문제됨)
+	그렇기 때문에 실질적으로 Issue를 처리하기 전까지(In Progress → Done) Resolution에 대한 입력을 막으려면 Create, Edit/View Screen에서는 해당 내용을 막아야 합니다
+	Resolution은 실제 업무가 진행된 내용을 확인하는 시점인 Review or Close transition의 Screen에 적용하여 입력된 내용을 재확인(수정) 할 수 있도록 처리하는 것을 추천합니다
+	만약 Resolution에 대한 입력(수정)이 필요하다면 해당 Project의 Edit/View Screen에 잠깐 Resolution을 넣고 → 수정 → 다시 Screen에서 제외 하는 내용으로 처리합니다
+	Issue에 대한 transition을 Board에서 진행할 경우 transition에서 Screen을 노출하게 정의해도 됩니다. 동작에 문제 없고 Board 상에서 관련 Screen이 팝업으로 노출됩니다
+
+
+Workflow
+	여러 부서에서 각각 다른 내용의 Workflow를 생성하게 되더라도 Status의 통일을 추천드립니다. Status의 통일은 Jira Filter를 단순화 할 수 있습니다
+	Add-on을 활용하면 Custom field의 value를 자동으로 입력 가능합니다. Server는 JIRA Suite Utilities, Cloud는 JIRA Toolkit Plugin 이라는 Free add-on을 제공합니다.
+	Validator 기능을 활용하여 특정 transition에서의 require 항목을 정의할 수 있습니다. 다만 해당 기능 활용 시 JIRA를 이해하고 사용해야 문제가 없습니다. 예를 들어 Create Issue에서 Sprint를 validator로 정의한다면 sub-task를 생성할 수 없게 됩니다(sub-task는 task의 sprint를 상속받기 때문에 sprint를 입력하지 않습니다)
+	
+
