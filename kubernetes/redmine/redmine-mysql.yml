@@ -1,0 +1,75 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+#  namespace: services
+  labels:
+    app: mysql
+spec:
+  ports:
+  - name: "3306"
+    port: 3306
+    targetPort: 3306
+  selector:
+    app: mysql
+  type: NodePort
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-claim
+  labels:
+    app: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+#  namespace: services
+  labels:
+    app: mysql
+spec:
+  strategy:
+    type: Recreate
+#  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - image: inintete1075/mariadb:10.1
+        imagePullPolicy: IfNotPresent
+        name: mysql
+        env:
+        - name: MYSQL_USER
+          value: redmine
+        - name: MYSQL_PASSWORD
+          value: password
+        - name: MYSQL_DATABASE
+          value: redmine_production
+        - name: MYSQL_ROOT_PASSWORD
+          value: password
+
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+            - name: mysql
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql
+          persistentVolumeClaim:
+            claimName: mysql-claim
+#      restartPolicy: Always
+status: {}
