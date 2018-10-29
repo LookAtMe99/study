@@ -14,20 +14,6 @@ spec:
   type: NodePort
 	
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: openldap-claim
-  labels:
-    app: openldap
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi 
-
----
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
