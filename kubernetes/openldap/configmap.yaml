@@ -1,0 +1,89 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openldap-seedusers
+
+data:
+  seedusers.ldif: |
+    dn: ou=Groups,dc=local,dc=io
+    changetype: add
+    objectclass: organizationalUnit
+    ou: Groups
+
+    # Add People OU
+    dn: ou=People,dc=local,dc=io
+    changetype: add
+    objectclass: organizationalUnit
+    ou: People
+
+    # Add users
+    dn: uid=user1,ou=People,dc=local,dc=io
+    changetype: add
+    objectclass: inetOrgPerson
+    objectclass: organizationalPerson
+    objectclass: person
+    objectclass: top
+    uid: user1
+    displayname: user1
+    sn: user1
+    cn: user1
+    userpassword: ChangeMe
+
+    dn: uid=user2,ou=People,dc=local,dc=io
+    changetype: add
+    objectclass: inetOrgPerson
+    objectclass: organizationalPerson
+    objectclass: person
+    objectclass: top
+    uid: user2
+    displayname: user2
+    sn: user2
+    cn: user2
+    userpassword: ChangeMe
+
+    dn: uid=user3,ou=People,dc=local,dc=io
+    changetype: add
+    objectclass: inetOrgPerson
+    objectclass: organizationalPerson
+    objectclass: person
+    objectclass: top
+    uid: user3
+    displayname: user3
+    sn: user3
+    cn: user3
+    userpassword: ChangeMe
+
+    dn: uid=user4,ou=People,dc=local,dc=io
+    changetype: add
+    objectclass: inetOrgPerson
+    objectclass: organizationalPerson
+    objectclass: person
+    objectclass: top
+    uid: user4
+    displayname: user4
+    sn: user4
+    cn: user4
+    userpassword: ChangeMe
+
+
+    # Create ICP user group1
+    dn: cn=icpusers1,ou=Groups,dc=local,dc=io
+    changetype: add
+    cn: icpusers1
+    objectclass: groupOfUniqueNames
+    objectclass: top
+    owner: cn=admin,dc=local,dc=io
+    uniquemember: uid=user1,ou=People,dc=local,dc=io
+
+    
+    # Create ICP user group2
+    dn: cn=icpusers2,ou=Groups,dc=local,dc=io
+    changetype: add
+    cn: icpusers2
+    objectclass: groupOfUniqueNames
+    objectclass: top
+    owner: cn=admin,dc=local,dc=io
+    uniquemember: uid=user2,ou=People,dc=local,dc=io
+    uniquemember: uid=user3,ou=People,dc=local,dc=io
+    uniquemember: uid=user4,ou=People,dc=local,dc=io
