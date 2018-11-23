@@ -1,5 +1,5 @@
-원본 : https://github.com/kimjmin/elastic-demo.git 을 토대로 study
-과거의 내용(elastic version, data 등)이 수정되어(혹은 내가 잘 몰라서) 원본으로는 동작하지 않아서 조금 수정하면서 실행해본 example 입니다.
+- 원본 : https://github.com/kimjmin/elastic-demo.git 을 토대로 study
+- 과거의 내용(elastic version, data 등)이 수정되어(혹은 내가 잘 몰라서) 원본으로는 동작하지 않아서 조금 수정하면서 실행해본 example 입니다.
 
 Pre-condition
 ```
