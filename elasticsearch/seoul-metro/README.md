@@ -3,12 +3,14 @@
 
 Pre-condition
 ```
-install nodejs 8 latest version
-install elk 6.4.1
-npm install (csv parser)
+install nodejs 8 latest version / 어떤 버전을 써야할 지 몰라서 그냥 아무 버전 씀
+install elk 6.4.1 / 원본에는 5 버전을 사용하고 있는데 user/pw 를 정의해야 하는 것 같아서 그냥 6버전으로 사용함
 ```
 
-## 1. 서울시 지하철 유동인원 데이터
+npm install (csv parser) / package.json 참조
+
+
+## 서울시 지하철 유동인원 데이터
 ### 1.1 ELK 설정
 #### elasticsearch
 
