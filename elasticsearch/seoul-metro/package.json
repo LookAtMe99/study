@@ -1,0 +1,11 @@
+{
+  "name": "elastic-study",
+  "main": "bin/run.js",
+  "bin": {
+    "elastic-demo1": "metro.js",
+    "elastic-demo2": "metro2.js"
+  },
+  "dependencies": {
+    "csv-parse": "^1.0.0"
+  }
+}
