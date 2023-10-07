@@ -1,1 +1,1 @@
-build fail (not register user) test3
+build fail (not register user) test2
